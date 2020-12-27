@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<f:view contentType="text/html" locale="es">
+   
+<h:head>
+	<link rel="stylesheet" href="css/styles.css" type="text/css" />
+    <script type="text/javascript" src="js/functions.js" />
+	<f:facet name="first">
+		<meta content='text/html; charset=UTF-8' http-equiv="Content-Type" />
+		<title></title>
+	</f:facet>
+</h:head>
+
+<h:body style="height:100%;overflow:visible;">
+
+<h:form id="form">
+   	
+   	<p:growl id="msgs" showDetail="true" life="2000" />
+	
+	<p:blockUI widgetVar="blockAccordion" block="form:contenedor">
+		<h:outputText value="Please wait..." />
+		<br />
+		<p:graphicImage name="ajax-loader.gif"  library="images" />
+	</p:blockUI>
+   	
+   	<div style="height:90vh;">
+	<p:panelGrid id="contenedor"
+		style="border: none;margin-bottom:0px;width:98% important!;height:90vh important!;">
+		
+		<p:row>
+			<p:column colspan="2">
+				<h:outputText value="User #{mainView.user.name}" styleClass="left"></h:outputText>
+				<p:commandLink href="Logout" value="Logout" styleClass="right"></p:commandLink>
+			</p:column>
+		</p:row>
+    
+    	<p:row>
+			<p:column style="width:50%;height:40% important!;vertical-align:top">
+			    <p:dataTable id="deviceList" forceId="true" style="margin-top:10px"
+			    	var="device" 
+			    	value="#{mainView.deviceList}" 
+			    	selectionMode="single" 
+			    	selection="#{mainView.selectedDevice}" 
+			    	rowKey="#{device.id}"
+			    	rows="20"
+			    	paginator="true"
+                    paginatorTemplate="{CurrentPageReport} {PreviousPageLink} {NextPageLink} {RowsPerPageDropdown}"
+                    rowsPerPageTemplate="10,20,40,50">
+			    	<p:ajax event="rowSelect" listener="#{mainView.onDeviceSelect}" update=":form:msgs,form:deviceDetails"  />
+			        <f:facet name="header">
+			            User Devices
+			        </f:facet>
+			        <p:column headerText="Id"  style="width:80px;">
+			            <h:outputText value="#{device.id}" />
+			        </p:column>
+			        <p:column headerText="Name" style="width:150px;">
+			            <h:outputText value="#{device.name}" />
+			        </p:column>
+			        <p:column headerText="Description">
+			            <h:outputText value="#{device.description}" />
+			        </p:column>
+			        <f:facet name="footer">
+			            <p:commandButton process="deviceList" update=":form:deviceSetup"  oncomplete="PF('deviceSetupDlg').show()" icon="ui-icon-gear" value="Setup"/>
+			        </f:facet>
+			    </p:dataTable>
+			</p:column>
+			
+			<p:column style="vertical-align:top;">
+	    		<h:panelGroup id="deviceDetails" style="margin-top:10px;width:60%">
+
+				    <p:dataTable id="deviceData" style="margin-top:10px"
+				    	rendered="#{not empty mainView.selectedDevice}"
+				    	var="dataLine" 
+				    	value="#{mainView.selectedDevice.dataLines}"
+				    	rows="20"
+			    		paginator="true"
+                    	paginatorTemplate="{CurrentPageReport} {PreviousPageLink} {NextPageLink} {RowsPerPageDropdown}"
+                    	rowsPerPageTemplate="10,20,40,50">
+				    	<f:facet name="header">
+			            	<h:outputText value="Device #{mainView.selectedDevice.id} [ #{mainView.selectedDevice.name} ]"></h:outputText>
+			       		</f:facet>
+					    <p:column headerText="Acquisition Date">
+					        <h:outputText value="#{dataLine.acquisitionDate}">
+					        	<f:convertDateTime pattern="MM-dd-yyyy hh:mm:ss" />
+					        </h:outputText>
+					    </p:column>
+					    <p:column headerText="Value Read">
+					        <h:outputText value="#{dataLine.dataRead}"/>
+					    </p:column>
+					    <p:column headerText="Read Date">
+					        <h:outputText value="#{dataLine.readDate}">
+					        	<f:convertDateTime pattern="MM-dd-yyyy hh:mm:ss" />
+					        </h:outputText>
+					    </p:column>
+				 	</p:dataTable>
+				   
+				</h:panelGroup>
+		   </p:column>
+		</p:row>
+   	</p:panelGrid>
+	</div>
+	
+	
+   	<p:dialog 
+   	 	header="Device Setup" 
+   	 	widgetVar="deviceSetupDlg" 
+   	 	modal="true" 
+   	 	showEffect="fade" 
+   	 	hideEffect="fade" 
+   	 	resizable="false">
+        <p:outputPanel id="deviceSetup">
+             <h:panelGrid columns="2">
+		        <p:imageCropper 
+		        	value="#{deviceConfigurationView.croppedImage}" 
+		        	image="/images/captura.png" 
+		        	initialCoords="225,75,300,125"/>
+		    </h:panelGrid>
+        </p:outputPanel>
+    </p:dialog>
+   	
+	<h:outputText value="version #{msg.version}" styleClass="versionInfo"></h:outputText>
+	
+</h:form>   
+</h:body>
+</f:view>
+</html>

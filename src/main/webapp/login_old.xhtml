@@ -1,0 +1,140 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+<f:view>
+
+<f:metadata>
+	<f:viewAction action="#{loginBean.onLoad}" />
+</f:metadata>
+
+<h:head>
+	<h:outputStylesheet library="css" name="default.css" />
+	<title>#{msg.loginView_title}</title>
+</h:head>
+
+<h:body id="body" style="text-align:center">
+     
+
+	<h:form id="login">
+    
+    <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+    	
+    	
+    <p:dialog 
+   		id="loginDialog"
+    	widgetVar="loginDlg"  
+    	header="#{msg.loginView_loginDialog_header}"
+    	visible="true"
+    	hideEffect="fade"
+    	resizable="false">
+    	
+    	<h:panelGrid columns="2" cellpadding="5">
+            <h:outputLabel for="username" value="#{msg.loginView_loginDialog_username_label}" />
+            <p:inputText id="username" value="#{loginBean.username}" required="true" label="username"/>
+ 			
+            <h:outputLabel for="password" value="#{msg.loginView_loginDialog_password_label}" />
+            <p:password id="password" value="#{loginBean.password}" required="true" label="password"/>
+             
+            <f:facet name="footer">
+                <p:commandButton 
+	                	id="btnLogin"
+	                	widgetVar="loginBtn"
+	                	value="#{msg.loginView_loginDialog_btnLogin_label}" 
+	                	action="#{loginBean.actionLogin}"
+	                	process="loginDialog"
+	                	update="growl, loginDialog, chgPasswdDialog"
+	                	onstart="PF('loginBtn').disable()"
+		    			oncomplete="handleLoginRequest(xhr, status, args);" />
+                <p:commandLink
+                		id="lnkForgotPasswd"
+						value="#{msg.loginView_loginDialog_lnkForgotPassword_label}" 
+						immediate="true" 
+						action="changepassword.xhtml?faces-redirect=true"
+						style="margin-top:0px;top:0px;"
+						styleClass="right"/>
+            </f:facet>  
+        </h:panelGrid>
+        
+        <p:tooltip for="username" showDelay="400" value="#{msg.loginView_loginDialog_username_tooltip}" />
+        <p:tooltip for="password" showDelay="400" value="#{msg.loginView_loginDialog_password_tooltip}" />
+        
+    </p:dialog>
+    
+  
+    <p:dialog 
+    	id="chgPasswdDialog" 
+    	header="Change Password" 
+    	widgetVar="chgPasswdDialog" 
+    	resizable="false">
+        
+        <h:panelGrid columns="3" cellpadding="5">
+            <h:outputLabel for="rusername" value="Username:" />
+            <p:inputText id="rusername" value="#{loginBean.username}" required="true"/>
+            <p:message for="rusername" id="msgUsername" display="icon" />
+ 
+            <h:outputLabel for="oldpassword" value="Old Password:" />
+            <p:password id="oldpassword" value="#{loginBean.password}" required="true"/>
+ 			<p:message for="rusername" id="msgOldpassword" display="icon" />
+            
+            <h:outputLabel for="newpasswd" value="New Password:" />
+            <p:password id="newpasswd" value="#{loginBean.newPassword}" required="true" validator="#{loginBean.validatePassword}">
+            	<p:ajax event="change" update="msgNewPassswd"/>
+            </p:password>
+            <p:message for="newpasswd" id="msgNewPassswd" display="icon" />
+            
+ 			<h:outputLabel for="newpasswd_v" value="Repeat New Password:" />
+            <p:password id="newpasswd_v" value="#{loginBean.newPasswordVerification}" required="true">
+            	<p:ajax event="change" update="msgPasswordVerification"/>
+            </p:password>
+            <p:message for="rusername" id="msgPasswordVerification" display="icon" />
+ 
+            <f:facet name="footer">
+                <p:commandButton 
+                	value="Change Password" 
+                	process="chgPasswdDialog"
+                	update="growl" 
+                	action="#{loginBean.onChangePassword}" />
+            </f:facet>
+            
+        </h:panelGrid>
+    </p:dialog>
+    
+
+    	
+    
+
+<script type="text/javascript">
+
+	/* <![CDATA[ */
+
+    function handleLoginRequest(xhr, status, args) {
+		if (!args) {
+			console.log('Login not processed');
+		}
+		else if (!args.loggedIn) {
+	   		console.log('user not logged in!');
+	   		PF('loginDlg').jq.effect('shake', {times:5}, 100);
+        }
+        else if (args.mustChangePassword) {
+        	console.log('user must change password');
+        	PF('loginDlg').hide();
+        	PF('chgPasswdDialog').show();
+        }
+		PF('loginDlg').hide();
+    	PF('loginBtn').enable();
+    }
+    
+    
+/* ]]> */
+</script>
+
+</h:form>
+
+</h:body>
+</f:view>
+</html>

@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+<f:view>
+
+<f:metadata>
+	<f:viewAction action="#{loginView.onLoad}" />
+</f:metadata>
+
+<h:head>
+	<h:outputStylesheet library="css" name="default.css" />
+	<title>#{msg.loginView_title}</title>
+</h:head>
+
+<h:body id="body" style="text-align:center">
+     
+    
+    <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+    
+    <h:form id="login">
+	
+	<p:dialog 
+   		id="loginDialog"
+    	widgetVar="loginDlg"  
+    	header="#{msg.loginView_loginDialog_header}"
+    	visible="#{not loginView.changePassword}"
+    	hideEffect="fade"
+    	resizable="false">
+    		
+    	<h:panelGrid columns="3" rendered="#{not loginView.changePassword}">
+            <p:outputLabel for="username" value="Username:" />
+            <p:inputText id="username" value="#{loginView.username}" required="true" />
+            <p:message for="username" />
+
+            <p:outputLabel for="password" value="Password" />
+            <p:password id="password" value="#{loginView.password}"  required="true" />
+            <p:message for="password" />
+
+            <p:outputLabel for="rememberMe" value="Remember Me?" />
+            <p:selectBooleanCheckbox id="rememberMe" value="#{loginView.rememberMe}"/>
+            <h:panelGroup />
+		</h:panelGrid>
+
+		<f:facet name="footer">
+            <p:commandButton
+            		id="loginBtn" 
+                	value="#{msg.loginView_loginDialog_btnLogin_label}" 
+                	action="#{loginView.actionLogin}"
+                	update="growl"
+                	onstart="PF('loginBtn').disable()"/>
+	    			
+	    	<p:commandLink
+               		id="forgotPasswdLnk"
+					value="#{msg.loginView_loginDialog_lnkForgotPassword_label}" 
+					action="changepassword.xhtml?faces-redirect=true"
+					style="margin-top:0px;top:0px;"
+					styleClass="right"/>
+		</f:facet>
+		
+	</p:dialog>					
+            
+    </h:form>
+  
+      
+    <h:form id="chgpasswd">
+    
+    <p:dialog 
+    	id="chgPasswdDialog" 
+    	header="Change Password" 
+    	visible="#{loginView.changePassword}"
+    	widgetVar="chgPasswdDialog" 
+    	resizable="false">
+        
+        <h:panelGrid columns="3" cellpadding="5">
+            <h:outputLabel for="rusername" value="Username:" />
+            <p:inputText id="rusername" value="#{loginView.username}" required="true"/>
+            <p:message for="rusername" id="msgUsername" display="icon" />
+ 
+            <h:outputLabel for="oldpassword" value="Old Password:" />
+            <p:password id="oldpassword" value="#{loginView.password}" required="true"/>
+ 			<p:message for="rusername" id="msgOldpassword" display="icon" />
+            
+            <h:outputLabel for="newpasswd" value="New Password:" />
+            <p:password id="newpasswd" value="#{loginView.newPassword}" required="true" validator="#{loginView.validatePassword}"/>
+            <p:message for="newpasswd" id="msgNewPassswd" display="icon" />
+            
+ 			<h:outputLabel for="newpasswd_v" value="Repeat New Password:" />
+            <p:password id="newpasswd_v" value="#{loginView.newPasswordVerification}" required="true"/>
+            <p:message for="rusername" id="msgPasswordVerification" display="icon" />
+ 
+            <f:facet name="footer">
+                <p:commandButton 
+                	value="Change Password" 
+                	update="growl" 
+                	action="#{loginView.actionChangePassword}" />
+            </f:facet>
+            
+        </h:panelGrid>
+        
+    </p:dialog>
+
+	</h:form>
+
+</h:body>
+</f:view>
+</html>

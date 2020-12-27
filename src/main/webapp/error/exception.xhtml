@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<f:view contentType="text/html" locale="es">
+   
+<h:head>
+	<f:facet name="first">
+		<meta content='text/html; charset=UTF-8' http-equiv="Content-Type" />
+		<title></title>
+	</f:facet>
+</h:head>
+
+<h:body id="body">
+
+<style>
+	body {
+		font-family: Arial, Verdana, Geneva, Helvetica, sans-serif;
+		font-size: 90%
+	}
+	
+	.header {
+		font-size: 120%;
+		font-weight: bold
+	}
+	
+	.ui-scrollpanel {
+	   width: 100%;
+	  	max-height: 70vh;
+	   box-sizing: border-box;
+	}
+	
+	.top {
+	    max-height: 30vh;
+	    overflow: auto;
+	}
+	
+	.stack {
+	    overflow: auto;
+	}
+	
+</style>
+
+<h:form>
+
+	<h:panelGroup layout="block" styleClass="top">
+		<h3>IoTManager Application Error: #{pfExceptionHandler.type}</h3>
+		This is an unexpected error. Please report it to the administrators.<br/>
+		<h4>Error Message</h4>
+		#{pfExceptionHandler.message}
+		<h4>Stack Trace</h4>
+	</h:panelGroup>
+	
+	<p:scrollPanel mode="native">
+		<h:outputText value="#{pfExceptionHandler.formattedStackTrace}" escape="false" />
+	</p:scrollPanel>
+	
+
+</h:form>
+</h:body>
+</f:view>
+</html>

@@ -1,0 +1,18 @@
+[ 
+	{
+		"id": "1", 
+		"name":"ADMINISTRATOR_ROLE"
+	}, 
+	{
+		"id": "2", 
+		"name":"PRODUCER_ROLE"
+		}, 
+	{
+		"id": "3", 
+		"name":"CUSTOMER_ROLE"
+	}, 
+	{
+		"id": "4", 
+		"name":"TEST_ROLE"
+	}
+]

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="${config.context_root}">
+   
+   <Resource name="mongodb/iotcloudDB"
+  		auth="Container"
+        type="com.mongodb.MongoClient"
+        closeMethod="close"
+        factory="com.mongodb.client.jndi.MongoClientFactory"
+        singleton="true"
+        username="${config.mongo.username}"
+	    password="${config.mongo.password}"
+	    host="${config.mongo.dbhost}"
+	    port="27017"
+	    db="${config.mongo.dbname}"
+   		connectionString="mongodb://${config.mongo.username}:${config.mongo.password}@${config.mongo.dbhost}:27017/?authSource=${config.mongo.dbname}&amp;authMode=scram-sha1" />  
+</Context>

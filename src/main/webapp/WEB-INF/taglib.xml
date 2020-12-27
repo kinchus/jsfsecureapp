@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<facelet-taglib 
+	version="2.0" 
+	xmlns="http://java.sun.com/xml/ns/javaee"
+ 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+ 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facelettaglibrary_2_0.xsd">
+    <namespace>http://iotcloud.com/jsf/tags</namespace>
+    <composite-library-name></composite-library-name>
+    <tag>
+        <tag-name>nameValidator</tag-name>
+        <validator>
+            <validator-id>iotcloud.nameValidator</validator-id>
+        </validator>
+        
+        <attribute>
+            <description>Allow for space characters. Default is false</description>
+            <name>allowSpaces</name>
+            <required>false</required>
+        </attribute>
+        
+        <attribute>
+            <description>Allow for digits. Default is true</description>
+            <name>allowDigits</name>
+            <required>false</required>
+        </attribute>
+        
+        <attribute>
+            <description>Minimum number of characters. Default is 1</description>
+            <name>minLength</name>
+            <required>false</required>
+        </attribute>
+        
+        <attribute>
+            <description>Maximum number of characters. Default is 32</description>
+            <name>maxLength</name>
+            <required>false</required>
+        </attribute>
+        
+        <attribute>
+            <description>Regular expression for the validation pattern</description>
+            <name>regex</name>
+            <required>false</required>
+        </attribute>
+        
+        <attribute>
+            <description>Prohibited characters. Some of them must be scaped by '\'</description>
+            <name>vetoedChars</name>
+            <required>false</required>
+        </attribute>
+    </tag>
+    
+    <!--  -->
+    <tag>
+        <tag-name>macValidator</tag-name>
+        <validator>
+            <validator-id>iotcloud.macValidator</validator-id>
+        </validator>
+    </tag>
+    
+    <!--  -->
+    <tag>
+        <tag-name>euiValidator</tag-name>
+        <validator>
+            <validator-id>iotcloud.euiValidator</validator-id>
+        </validator>
+    </tag>
+    
+    <!--  -->
+    <tag>
+        <tag-name>ipAddressValidator</tag-name>
+        <validator>
+            <validator-id>iotcloud.ipAddressValidator</validator-id>
+        </validator>
+    </tag>
+    
+    
+</facelet-taglib>

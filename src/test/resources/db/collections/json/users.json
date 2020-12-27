@@ -1,0 +1,66 @@
+[ 
+	{
+		"id": "01", 
+		"username" : "admin",
+		"email" : "admin@admin.net",
+		"firstName" : "admin",
+		"middleName" : "admin",
+		"lastName" : "admin",
+		"address" : "none",
+		"city" : "unknown",
+		"phoneNumber" : "911111111",
+		"enabled" : true,
+		"status" : "",
+		"roles" : [
+			{	"id": "1" }
+		]
+	}, 
+	{
+		"id": "02", 
+		"username" : "producer",
+		"email" : "producer@producer.net",
+		"firstName" : "producer",
+		"middleName" : "producer",
+		"lastName" : "producer",
+		"address" : "none",
+		"city" : "unknown",
+		"phoneNumber" : "911111111",
+		"enabled" : true,
+		"status" : "",
+		"roles" : [
+			{	"id": "2" }
+		]
+	}, 
+	{
+		"id": "03", 
+		"username" : "customer",
+		"email" : "customer@customer.net",
+		"firstName" : "customer",
+		"middleName" : "customer",
+		"lastName" : "customer",
+		"address" : "none",
+		"city" : "unknown",
+		"phoneNumber" : "911111111",
+		"enabled" : true,
+		"status" : "",
+		"roles" : [
+			{	"id": "3" }
+		]
+	}, 
+	{
+		"id": "04", 
+		"username" : "test",
+		"email" : "test@test.net",
+		"firstName" : "test",
+		"middleName" : "test",
+		"lastName" : "test",
+		"address" : "none",
+		"city" : "unknown",
+		"phoneNumber" : "911111111",
+		"enabled" : true,
+		"status" : "",
+		"roles" : [
+			{	"id": "4" }
+		]
+	}
+]
